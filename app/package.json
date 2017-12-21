@@ -1,0 +1,4 @@
+{ 
+  "name": "app",
+  "//": "To support absolute import, ex: import Theme from 'app/config/Theme';"
+}
