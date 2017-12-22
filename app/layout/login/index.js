@@ -62,7 +62,7 @@ class Login extends Component {
                         <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
                             <Text style={{fontSize: 20, color: '#ccc', fontWeight: 'bold', margin: 15}}>DEMO APP</Text>
                         </View>
-                        <Form style={{padding: 20, paddingBottom: 10}}>
+                        <Form style={{padding: 20}}>
                             <Item style={{backgroundColor: '#ffffffdd', paddingLeft: 15, marginLeft:0}} >
                                 <Input 
                                 placeholder='User Name'
@@ -79,17 +79,17 @@ class Login extends Component {
                                 autoCapitalize="none"
                                 style={{fontSize: 16}}  />
                             </Item>
-                                <Button block transparent onPress={() => this.login()}  style={{borderRadius: 25 ,  backgroundColor: '#53C7FE'}}>
+                                <Button block transparent onPress={() => this.login()}  style={{borderRadius: 25 ,  backgroundColor: '#604c8d'}}>
                                     <Text style={{color:'white'}}>Login</Text>
                                 </Button>
                         </Form>
-                        <View  style={{marginTop: 10, alignItems: 'center', flexDirection: 'row', backgroundColor: 'white', paddingLeft: 10}} >
+                        {/*<View  style={{marginTop: 10, alignItems: 'center', flexDirection: 'row', backgroundColor: 'white', paddingLeft: 10}} >
                             <View style={{flex: 1}} />
                             <Button iconRight transparent onPress={()=> this.state.isLoading ? undefined :  this.props.navigation.navigate('Register') } >
                                 <Text style={{color: '#444', fontSize: 14 }} >Register</Text>
                                 <Icon name="arrow-forward"  style={{color: '#999', fontSize: 18}} />
                             </Button>
-                        </View>
+                        </View>*/}
                     </View>)
                 }}>
                     </FlatList>

@@ -52,8 +52,11 @@ export default class App extends Component  {
         console.log(store.getState());
         return (
             <Provider store={ store } >
+            
                 <PersistGate  
-                    loading={<Text>Loading</Text>}
+                    loading={ <Container style={{backgroundColor: '#604c8d', alignItems: 'center', justifyContent: 'center'}}> 
+                                <Text style={{color: 'white'}}>Loading ...</Text>
+                            </Container>}
                     onBeforeLift={onBeforeLift}
                     persistor={persistor}
                     >

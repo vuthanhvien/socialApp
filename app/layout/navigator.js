@@ -10,23 +10,14 @@ import {
 	TabNavigator 
 } from 'react-navigation';
 
-// import {Icons, Colors, Settings }  from 'app/config';
-
 import Login 		from 'app/layout/login';
-import Home 		from 'app/layout/home';
-// import Register 	from 'app/layouts/register';
-
-// import { navigator as Dashboard} 			from 'app/layouts/dashboard/navigator';
-
-// import { navigator as ChannelNavigator } 	from 'app/layouts/channel/navigator';
+import {navigator as Home } 		from 'app/layout/main/navigator';
+import Setting 		from 'app/layout/setting';
 
 export const NoAuthNavigator = TabNavigator({
 	Login: {
 		screen: Login
 	},
-	// Register: {
-		// screen: Register
-	// }
 },{
 	initialRouteName : 'Login',
 	swipeEnabled: false,
@@ -36,9 +27,9 @@ export const NoAuthNavigator = TabNavigator({
 export const MainNavigator = StackNavigator({
 	Home: {
 		screen: Home,
-		navigationOptions: {
-			header: null
-		}
+	},
+	Setting: {
+		screen : Setting,
 	}
 },{
 	initialRouteName : 'Home',
