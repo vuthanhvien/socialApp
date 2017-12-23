@@ -24,52 +24,6 @@ class Home extends Component {
     componentWillMount(){
 
         this.setState({
-            data: [
-            {
-                type: 1,
-                avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg',
-                user: 'Keira Knightley',
-                time: '1 min',
-                image: 'https://i.pinimg.com/originals/bc/ed/1d/bced1da35d38f03aaaca722c6450686c.jpg'
-            },
-             {
-                type: 1,
-                avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg',
-                user: 'Keira Knightley',
-                time: '1 min',
-                image: 'https://i.pinimg.com/originals/bc/ed/1d/bced1da35d38f03aaaca722c6450686c.jpg'
-            },
-            {
-                type: 2,
-                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg',
-                content : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ulla',
-                user: 'Mackenzie Foy',
-                time: 'Thus',
-            },
-            {
-                type: 3,
-                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg',
-                content : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ulla',
-                user: 'Mackenzie Foy',
-                time: 'Sat',
-                image: 'https://www.planwallpaper.com/static/images/Child-Girl-with-Sunflowers-Images.jpg',
-            },
-            {
-                type: 3,
-                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg',
-                content : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ulla',
-                user: 'Mackenzie Foy',
-                time: 'Sat',
-                image: 'https://www.planwallpaper.com/static/images/Child-Girl-with-Sunflowers-Images.jpg',
-            },
-            {
-                type: 3,
-                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg',
-                content : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ulla',
-                user: 'Mackenzie Foy',
-                time: 'Sat',
-                image: 'https://www.planwallpaper.com/static/images/Child-Girl-with-Sunflowers-Images.jpg',
-            }],
             userRecent: [{
                 name: 'Emma Stone',
                 avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg'
@@ -106,14 +60,17 @@ class Home extends Component {
     }
 
     renderItem(item){
-        console.log(item)
         return (
             <View>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail')}>
                 <View style={{flexDirection: 'row', borderTopWidth: 1, borderColor: '#f4f4f4', padding: 5, paddingLeft: 10, alignItems: 'center'}}>
+                    <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: '#ccc'}}>
                     <Image source={{uri: item.avatar}} style={{width: 50, height: 50, borderRadius: 25}} />
-                    <View style={{height: 50, flex: 1, justifyContent: 'center', marginLeft: 20}}>
+                    </View>
+                    <View style={{height: 50, flex: 1, justifyContent: 'center', marginLeft: 10}}>
                         <Text style={{color: '#444', fontWeight: 'bold', fontSize: 14}}>{item.user}</Text>
                     </View>
+                    <Icon name="ios-more-outline" style={{color: '#444'}} />
                     <Text style={{fontSize: 10, color: '#999', paddingRight: 8}}>{item.time}</Text>
                 </View>
                 {
@@ -123,22 +80,27 @@ class Home extends Component {
                 {
                     item.content ?
                     <View style={{paddingLeft: 20, paddingRight: 10, paddingTop: 10 }}>
-                        <Text style={{fontSize: 14, color: '#444'}} numberOfLines={5}>
+                        <Text style={{fontSize: 14, color: '#444'}} numberOfLines={item.image ? 5 : 15}>
                             {item.content}
                         </Text>
                     </View>
                     :null
                 }
+                </TouchableOpacity>
                 <View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
                     <TouchableOpacity   onPress={()=>{ item.like = !item.like; this.setState({}) }} activeOpacity={0.8} style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon  name={ item.like ? 'ios-heart' : 'ios-heart-outline'} style={{color: '#604c8d', marginLeft: 5, marginRight: 5}}/>
+                        <Icon  name={ item.like ? 'ios-heart' : 'ios-heart-outline'} style={{color: item.like ? '#EE2737' : '#604c8d', marginLeft: 5, marginRight: 5}}/>
                     </TouchableOpacity>
 
                     <Icon  name="ios-text-outline" style={{color: '#604c8d', marginLeft: 5, marginRight: 5}}/>
-                    <Text style={{fontSize:12, color: '#555'}}>
-                        <Text style={{fontSize: 12, fontWeight: 'bold', color: '#444'}}>Emma stone :</Text>
-                        Today is good day
-                    </Text>
+                    {
+                        item.comment && item.comment.length > 0 ?
+                        <Text style={{fontSize:12, color: '#555'}}>
+                            <Text style={{fontSize: 12, fontWeight: 'bold', color: '#444'}}>{item.comment[0].name} :</Text>
+                            {item.comment[0].text}
+                        </Text>
+                    :null
+                    }
                 </View>
             </View>
             )
@@ -153,7 +115,7 @@ class Home extends Component {
                 {
                     this.state.userRecent ? this.state.userRecent.map((user, index)=>{
                         return (
-                            <View style={{width: 80, height: 90, padding: 10}}>
+                            <View style={{width: 80, height: 90, padding: 10}} key={index}>
                                 <View style={{width: 66, height: 66, borderRadius: 33, borderColor: '#604c8d', borderWidth: 1, alignItems: 'center', justifyContent: 'center'}}>
                                     <Image source={{uri: user.avatar}} style={{width: 60, height: 60, borderRadius: 30}}/>
                                 </View>
@@ -165,6 +127,18 @@ class Home extends Component {
 
                 </ScrollView>
             </View>
+            )
+    }
+    noDataDisplay(){
+        return (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 400}}>
+                <Text style={{color: '#444', marginBottom: 10}}> No feed available</Text>
+                <View>
+                    <Button transparent style={{borderColor: '#604c8d', borderWidth: 1}} onPress={()=>this.props.navigation.navigate('Create')}>
+                        <Text>Create</Text>
+                    </Button>
+                </View>
+                </View>
             )
     }
     render() {
@@ -182,7 +156,7 @@ class Home extends Component {
                         Timeline
                     </Text>
                     </Body>
-                    <Right style={{flex: 1}}>
+                    <Right style={{flex: 1, flexDirection: 'row'}}>
                         <Button onPress={()=>this.props.navigation.navigate('Setting')} transparent style={{width: '100%', height: 60, justifyContent: 'flex-end'}}>
                             <Icon name="ios-settings-outline" style={{color:'#604c8d', marginRight: 5, fontSize: 30}} />
                         </Button>
@@ -190,9 +164,10 @@ class Home extends Component {
                 </Header>
                 <FlatList
                     ListHeaderComponent ={()=>this.renderHeader()}
-                    data={this.state.data}
-                    keyExtractor={(item, index)=>item.type+index}
+                    data={this.props.app.timeline}
+                    keyExtractor={(item, index)=>index}
                     renderItem={({item, index})=>this.renderItem(item)}
+                    ListEmptyComponent={()=>this.noDataDisplay()}
                     >
                 </FlatList>
             </Container>

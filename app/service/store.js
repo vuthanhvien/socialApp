@@ -1,7 +1,7 @@
 import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 
 import auth 		from 'app/layout/login/reducers';
-import home 		from 'app/layout/home/reducers';
+import home 		from 'app/layout/main/home/reducers';
  
 // import persist 		from './reducers';
 // import * as actions from './actions';

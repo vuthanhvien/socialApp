@@ -10,7 +10,7 @@ import {
 	TabNavigator 
 } from 'react-navigation';
 
-import Home			from 'app/layout/main/home';
+import { navigator as  Home}			from 'app/layout/main/home/navigator';
 import Create		from 'app/layout/main/create';
 import Search		from 'app/layout/main/search';
 import Profile		from 'app/layout/main/profile';
@@ -24,7 +24,7 @@ export const navigator = TabNavigator({
 			tabBarIcon: ({ tintColor, focused }) => (
 				<Icon 
 				name={focused ? "ios-home" : 'ios-home-outline'}
- 				style={{ width:24, height:24,color: focused ? '#604c8d' : '#787878'}} 
+ 				style={{ fontSize: 24, color: focused ? '#604c8d' : '#787878'}} 
 				/>
 				),
 		}),
@@ -36,7 +36,7 @@ export const navigator = TabNavigator({
 			tabBarIcon: ({ tintColor, focused }) => (
 				<Icon 
 				name={focused ? "ios-search" :  "ios-search-outline"}
-				style={{ width:24, height:24,color: focused ? '#604c8d' : '#787878'}} 
+				style={{fontSize: 24, color: focused ? '#604c8d' : '#787878'}} 
 				/>
 				),
 		}),
@@ -59,7 +59,7 @@ export const navigator = TabNavigator({
 			tabBarIcon: ({ tintColor, focused }) => (
 				<Icon 
 				name={focused ? "ios-heart" :  "ios-heart-outline"}
-				style={{ width:24, height:24, color: focused ? '#604c8d' : '#787878'}} 
+				style={{ fontSize: 24, color: focused ? '#604c8d' : '#787878'}} 
 				/>
 				),
 		}),
@@ -71,7 +71,7 @@ export const navigator = TabNavigator({
 			tabBarIcon: ({ tintColor, focused }) => (
 				<Icon 
 				name={focused ? "ios-person" :  "ios-person-outline"}
-				style={{ width:24, height:24,color: focused ? '#604c8d' : '#787878'}} 
+				style={{ fontSize: 24, color: focused ? '#604c8d' : '#787878'}} 
 				/>
 				),
 		}),

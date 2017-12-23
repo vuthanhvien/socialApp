@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image} from 'react-native';
-import { Button, Text , Container, Header, Left, Body, Right, Icon, View, Input} from 'native-base';
+import { Image, ScrollView} from 'react-native';
+import { Button, Text , Container, Header, Left, Body, Right, Icon, View, Input, Content } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
 import { connect } from 'react-redux';
@@ -20,6 +20,43 @@ class Search extends Component {
             text: ''
         }
     }
+
+
+    componentWillMount(){
+
+        this.setState({
+            userRecent: [{
+                name: 'Emma Stone',
+                avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg'
+            },{
+                name: 'Mackenzie Foy',
+                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg'
+            },{
+                name: 'Keira Knightley',
+                avatar: 'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg'
+            },{
+                name: 'Emma Stone',
+                avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg'
+            },{
+                name: 'Mackenzie Foy',
+                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg'
+            },{
+                name: 'Keira Knightley',
+                avatar: 'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg'
+            },{
+                name: 'Emma Stone',
+                avatar: 'https://kenh14cdn.com/2016/a65b1712879841ed949541589bb27ce4-1481932442078.jpg'
+            },{
+                name: 'Mackenzie Foy',
+                avatar: 'https://www.shemazing.net/wp-content/uploads/2016/07/mfdawn2.jpg'
+            },{
+                name: 'Keira Knightley',
+                avatar: 'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg'
+            }]
+        })
+       
+    }
+
     render() {
         
         return (
@@ -30,14 +67,35 @@ class Search extends Component {
                             value={this.state.text}
                             placeholder="Enter keyword"
                             onChangeText={(text) => this.setState({text})}
-                            style={{fontSize: 12, height: 40}}
+                            style={{fontSize: 14, height: 40}}
                             placeholderTextColor="#999"
                             onSubmitEditing ={()=>this.search()}
                         />
                         <Icon name="ios-search-outline" style={{color: '#999'}}/>
                     </View>
                 </Header>
-                <Text>Search</Text>
+                <Content>
+                     <View style={{height: 120, paddingTop:10}}>
+                        <ScrollView 
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        >
+                        {
+                            this.state.userRecent ? this.state.userRecent.map((user, index)=>{
+                                return (
+                                    <View style={{width: 80, height: 90, padding: 10}} key={index}>
+                                        <View style={{width: 66, height: 66, borderRadius: 33, borderColor: '#604c8d', borderWidth: 1, alignItems: 'center', justifyContent: 'center'}}>
+                                            <Image source={{uri: user.avatar}} style={{width: 60, height: 60, borderRadius: 30}}/>
+                                        </View>
+                                        <Text style={{fontSize: 12, color: '#999'}} numberOfLines={1}>{user.name}</Text>
+                                    </View>
+                                )
+                            }) :null
+                        }
+
+                        </ScrollView>
+            </View>
+                </Content>
             </Container>
         );
     }

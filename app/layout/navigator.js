@@ -11,7 +11,7 @@ import {
 } from 'react-navigation';
 
 import Login 		from 'app/layout/login';
-import {navigator as Home } 		from 'app/layout/main/navigator';
+import {navigator as HomeNavigator } 		from 'app/layout/main/navigator';
 import Setting 		from 'app/layout/setting';
 
 export const NoAuthNavigator = TabNavigator({
@@ -26,7 +26,7 @@ export const NoAuthNavigator = TabNavigator({
 
 export const MainNavigator = StackNavigator({
 	Home: {
-		screen: Home,
+		screen: HomeNavigator,
 	},
 	Setting: {
 		screen : Setting,

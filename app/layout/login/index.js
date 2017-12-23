@@ -25,24 +25,33 @@ class Login extends Component {
     }
 
     login(){
-        console.log('das0');
+        if(this.state.name){
+            var avatar = [
+                'https://hinhnendep.pro/wp-content/uploads/2016/04/top-hinh-anh-avatar-girl-xinh-thu-hut-nhat-facebook-8.jpg',
+                'http://tuvublog.com/wp-content/uploads/2017/08/6-61.jpg',
+                'https://pbs.twimg.com/profile_images/848009415206858752/cDMhhlfF_400x400.jpg',
+                'http://lazi.vn/uploads/users/avatar/1493713055_hinh-anh-girl-xinh-159.jpg',
+                'https://s19.postimg.org/ua9j70urn/573abe612c4b1.jpg',
+                'http://images.mid-day.com/images/2017/feb/01-Aankita.jpg'
+            ]
+            var auth = {
+                token:'AAEAAQAAAAAAAAZYAAAAJGZkNjM0YjRhLTFhN2EtNGM0Zi1hYzFmLTcwOGZmZWMzYTY0Yw',
+                user: this.state.name,
+                avatar: avatar[this.state.name.length <= 6  ? this.state.name.length : 6]
+            };
 
-        var auth = {
-            token:'res.token',
-            user:'res.user',
-        };
 
+            this.props.actions.authLogin(auth);
+                
 
-        this.props.actions.authLogin(auth);
-            
-
-        this.props.navigation && this.props.navigation.dispatch(NavigationActions.reset({
-            key: null,
-            index: 0,
-            actions: [ NavigationActions.navigate({ 
-                routeName: 'Main'
-            })]
-        }));
+            this.props.navigation && this.props.navigation.dispatch(NavigationActions.reset({
+                key: null,
+                index: 0,
+                actions: [ NavigationActions.navigate({ 
+                    routeName: 'Main'
+                })]
+            }));
+        }
     }
 
     render() {

@@ -55,7 +55,7 @@ class Favorite extends Component {
                 {
                     data ? data.map((item, index)=>{
                         return (
-                             <ListItem style={{ backgroundColor: item.new ? '#f4f4f4' : 'white', borderBottomWidth: 1, borderColor: '#f4f4f4',  marginLeft: 0, paddingLeft: 15}}
+                             <ListItem key={index} style={{ backgroundColor: item.new ? '#f4f4f4' : 'white', borderBottomWidth: 1, borderColor: '#f4f4f4',  marginLeft: 0, paddingLeft: 15}}
                                 onPress={()=>console.log('12')}>
                                 <Image source={{uri: item.avatar}} style={{width: 40, height: 40, borderRadius: 20}}/>
                                 <Text style={{flex: 1, fontSize: 14, color: '#777', padding: 10}} numberOfLines={3}>
@@ -93,7 +93,7 @@ class Favorite extends Component {
                 {
                     data ? data.map((item, index)=>{
                         return (
-                             <ListItem style={{ backgroundColor: item.new ? '#f4f4f4' : 'white', borderBottomWidth: 1, borderColor: '#f4f4f4', height: 60, marginLeft: 0, paddingLeft: 15}}
+                             <ListItem key={index} style={{ backgroundColor: item.new ? '#f4f4f4' : 'white', borderBottomWidth: 1, borderColor: '#f4f4f4', height: 60, marginLeft: 0, paddingLeft: 15}}
                                 onPress={()=>console.log('12')}>
                                 <Image source={{uri: item.avatar}} style={{width: 40, height: 40, borderRadius: 5}}/>
                                 <Text style={{flex: 1, fontSize: 14, color: '#777', padding: 10}} numberOfLines={3}>
