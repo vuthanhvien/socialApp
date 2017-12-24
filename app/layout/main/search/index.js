@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ScrollView} from 'react-native';
+import { Image, ScrollView, FlatList} from 'react-native';
 import { Button, Text , Container, Header, Left, Body, Right, Icon, View, Input, Content } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
@@ -17,7 +17,7 @@ class Search extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            text: ''
+            text: '',
         }
     }
 
@@ -56,8 +56,41 @@ class Search extends Component {
         })
        
     }
-
+    _renderImage(item){
+        return (
+            <Image style={{width: 120, height: 100, margin: 2}} source={{uri: item}}  />
+            )
+    }
     render() {
+
+        var urls = [
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',        
+        ]
         
         return (
             <Container style={{  backgroundColor: 'white'}}>
@@ -94,7 +127,14 @@ class Search extends Component {
                         }
 
                         </ScrollView>
-            </View>
+                    </View>
+                    <FlatList 
+                        numColumns={4}
+                        keyExtractor={(item, index)=> (index)}
+                        data={urls}
+                        renderItem={({item, index}) =>this._renderImage(item, index)}
+                    >
+                    </FlatList>
                 </Content>
             </Container>
         );

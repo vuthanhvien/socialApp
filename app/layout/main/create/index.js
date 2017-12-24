@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image} from 'react-native';
+import { Image, FlatList, Keyboard, TouchableOpacity, ScrollView} from 'react-native';
 import { Button, Text , Container, Header, Tabs, Tab, TabHeading, Icon, Left, Body, Right, Content, View, Input, Spinner} from 'native-base';
 import { NavigationActions } from 'react-navigation';
 
@@ -14,14 +14,36 @@ class Create extends Component {
         tabBarVisible: false,
     };
 
+    componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow () {
+    // alert('Keyboard Shown');
+    this.setState({image: false})
+  }
+
+  _keyboardDidHide () {
+    // alert('Keyboard Hidden');
+  }
+
     constructor (props) {
         super(props);
         this.state = {
             isLoading: false,
-            text: ''
+            text: '',
+            image: false,
+            imageSelected : []
         }
     }
     save(){
+        Keyboard.dismiss();
         this.setState({isLoading: true});
         var dt = new Date();
         var data = {
@@ -30,16 +52,50 @@ class Create extends Component {
                 user: this.props.auth.user,
                 time: dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate(),
                 id: dt.getTime(),
-                content: this.state.text
+                content: this.state.text,
+                image: this.state.imageSelected
             }
-        this.props.timelineActions.addTimeline(data);
         setTimeout(()=>{
-            this.setState({isLoading: false, text: ''});
+            this.props.timelineActions.addTimeline(data);
+            this.setState({isLoading: false, text: '', imageSelected: [], image: false});
             this.props.navigation.goBack();
-        }, 5000);
+        }, 0);
+    }
+    openImages(){
+        Keyboard.dismiss();
+        this.setState({image: !this.state.image});
+    }
+    onSelect(item){
+        console.log(this.state.imageSelected);
+        var imageSelected = this.state.imageSelected;
+        imageSelected.push(item);
+        this.setState({imageSelected: imageSelected});
+    }
+    _renderImage( item, index ){
+        return (
+            <TouchableOpacity onPress={()=>this.onSelect(item)} style={{width: '33%', height: 100, margin: 1}}>
+                <Image style={{width: "100%", height: '100%'}} source={{uri: item}}/>
+            </TouchableOpacity>
+            )
     }
     render() {
-        console.log(this.props);
+        var urls = [
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://globalhobo.com.au/wp-content/uploads/2013/11/rome-selfiej.jpg',
+        'https://i.pinimg.com/736x/3f/3f/05/3f3f05ead894bd298b38e9a9f4f785ec--selfies-poses-selfie-poses-instagram.jpg',
+        'https://pbs.twimg.com/media/C2jHJ8mUUAA6B2f.jpg',
+        'http://4.bp.blogspot.com/-d0visepcRCo/ViOmxp7xMsI/AAAAAAAAAjQ/VuG-cwWaxtE/s1600/selfie%2Bpretty%2Bgirl.jpg',
+        'https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/e15/11357443_436485073200726_427658500_n.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        'http://globalhobo.com.au/wp-content/uploads/2013/11/rome-selfiej.jpg',
+        'https://i.pinimg.com/736x/3f/3f/05/3f3f05ead894bd298b38e9a9f4f785ec--selfies-poses-selfie-poses-instagram.jpg',
+        'https://pbs.twimg.com/media/C2jHJ8mUUAA6B2f.jpg',
+        'http://4.bp.blogspot.com/-d0visepcRCo/ViOmxp7xMsI/AAAAAAAAAjQ/VuG-cwWaxtE/s1600/selfie%2Bpretty%2Bgirl.jpg',
+        'https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/e15/11357443_436485073200726_427658500_n.jpg',
+        'http://www.celebshairstyles.com/wp-content/uploads/2017/01/Keira-Knightley-Short-Bob-Hairstyle.jpg',
+        ]
         return (
             <Container style={{  backgroundColor: 'white'}}>
                 <Header style={{backgroundColor: '#f4f4f4'}}>
@@ -75,8 +131,21 @@ class Create extends Component {
                             ref="input"
                         />
                         </View>
+                        {
+                            this.state.imageSelected && this.state.imageSelected.length > 0 ?
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
+                            {
+                                this.state.imageSelected.map((img, index)=>{
+                                return(
+                                        <Image key={index} source={{uri: img}} style={{width: 100, height: 100, margin: 2}} />
+                                    )
+                                })
+                            }
+                            </ScrollView>
+                            :null
+                        }
                         <View style={{flexDirection: 'row', backgroundColor: '#f4f4f4', borderBottomLeftRadius: 10, borderBottomRightRadius: 10}}>
-                            <Button transparent>
+                            <Button transparent onPress={()=>this.openImages()}>
                                 <Icon name="ios-image-outline" style={{color: '#604c8d'}} />
                             </Button>
                             <Button transparent>
@@ -85,6 +154,19 @@ class Create extends Component {
                         </View>
                     </View>
                 </Content>
+                {
+                    this.state.image ?
+                    <View style={{height: 220}}>
+                        <FlatList 
+                            numColumns={4}
+                            keyExtractor={(item, index)=> (index)}
+                            data={urls}
+                            renderItem={({item, index}) =>this._renderImage(item, index)}
+                        >
+                        </FlatList>
+                    </View>
+                    :null
+                }
             </Container>
         );
     }

@@ -62,7 +62,7 @@ class Home extends Component {
     renderItem(item){
         return (
             <View>
-                <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail')}>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail', item)}>
                 <View style={{flexDirection: 'row', borderTopWidth: 1, borderColor: '#f4f4f4', padding: 5, paddingLeft: 10, alignItems: 'center'}}>
                     <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: '#ccc'}}>
                     <Image source={{uri: item.avatar}} style={{width: 50, height: 50, borderRadius: 25}} />
@@ -70,12 +70,14 @@ class Home extends Component {
                     <View style={{height: 50, flex: 1, justifyContent: 'center', marginLeft: 10}}>
                         <Text style={{color: '#444', fontWeight: 'bold', fontSize: 14}}>{item.user}</Text>
                     </View>
-                    <Icon name="ios-more-outline" style={{color: '#444'}} />
-                    <Text style={{fontSize: 10, color: '#999', paddingRight: 8}}>{item.time}</Text>
+                    <Button transparent onPress={()=>console.log('123')}>
+                        <Icon name="ios-more-outline" style={{color: '#444'}} />
+                    </Button>
+                    {/*<Text style={{fontSize: 10, color: '#999', paddingRight: 8}}>{item.time}</Text>*/}
                 </View>
                 {
                     item.image ? 
-                    <Image source={{uri: item.image}} style={{height: 400, width: '100%'}}/>:null
+                    <Image source={{uri: item.image[0]}} style={{height: 400, width: '100%'}}/>:null
                 }
                 {
                     item.content ?
