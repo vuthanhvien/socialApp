@@ -37,13 +37,9 @@ class Login extends Component {
             var auth = {
                 token:'AAEAAQAAAAAAAAZYAAAAJGZkNjM0YjRhLTFhN2EtNGM0Zi1hYzFmLTcwOGZmZWMzYTY0Yw',
                 user: this.state.name,
-                avatar: avatar[this.state.name.length <= 6  ? this.state.name.length : 6]
+                avatar: avatar[this.state.name.length <= 5  ? this.state.name.length : 5]
             };
-
-
             this.props.actions.authLogin(auth);
-                
-
             this.props.navigation && this.props.navigation.dispatch(NavigationActions.reset({
                 key: null,
                 index: 0,

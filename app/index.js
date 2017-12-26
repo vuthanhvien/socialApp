@@ -1,9 +1,3 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
-
 import React, { Component } from 'react';
 import {
     Text,
@@ -17,7 +11,6 @@ Container
 } from 'native-base';
 
 import {Provider} from 'react-redux';
-// import store from './service/store.js';
 
 import MainContent from 'app/component/maincontent.js';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -26,22 +19,21 @@ import configureStore from './service/store.js';
 const { persistor, store } = configureStore();
 
 const onBeforeLift = () => {
-  // take some action before the gate lifts
 }
-
 
 import { AppNavigator } from 'app/layout/navigator.js';
 
-
-
 console.disableYellowBox = true;
-export default class App extends Component  {
+if((process.env.NODE_ENV || '').toLowerCase() === 'production'){
+    console.log = function(){};
+    console.error = function(){};
+}
 
+export default class App extends Component  {
     constructor(props) {
         super(props);
         this.state = {};
     }
-
     componentWillMount() {
     }
 

@@ -32,6 +32,23 @@ export default function reducer(state = initialState, action){
 				...state,
 				timeline: _new
 			}
+		case 'FEED_ADD_COMMENT':
+			var timeline = state.timeline;
+			var comment = action.data;
+			var id = action.id;
+			timeline.map((feed, index)=>{
+				if(feed.id == id) {
+					feed.comments = feed.comments ? feed.comments : [];
+					feed.comments.push(comment)
+					return feed;
+				}else{
+					return feed;
+				}
+			})
+			return{
+				...state,
+				timeline: timeline
+			}
 		default:
 			return state;
 	}

@@ -17,7 +17,7 @@ class Home extends Component {
         super(props);
         this.state = {
             isLoading: false,
-           
+            commentId: 0
         }
     }
 
@@ -58,14 +58,17 @@ class Home extends Component {
     logout(){
         this.props.authActions.authLogout();
     }
-
-    renderItem(item){
+    comment(item){
+        console.log(item);
+        // this.setState({commentId: item.id});
+    }
+    renderItem(item, index){
         return (
             <View>
-                <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail', item)}>
+                <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail', index)}>
                 <View style={{flexDirection: 'row', borderTopWidth: 1, borderColor: '#f4f4f4', padding: 5, paddingLeft: 10, alignItems: 'center'}}>
                     <View style={{width: 50, height: 50, borderRadius: 25, backgroundColor: '#ccc'}}>
-                    <Image source={{uri: item.avatar}} style={{width: 50, height: 50, borderRadius: 25}} />
+                        <Image source={{uri: item.avatar}} style={{width: 50, height: 50, borderRadius: 25}} />
                     </View>
                     <View style={{height: 50, flex: 1, justifyContent: 'center', marginLeft: 10}}>
                         <Text style={{color: '#444', fontWeight: 'bold', fontSize: 14}}>{item.user}</Text>
@@ -73,7 +76,6 @@ class Home extends Component {
                     <Button transparent onPress={()=>console.log('123')}>
                         <Icon name="ios-more-outline" style={{color: '#444'}} />
                     </Button>
-                    {/*<Text style={{fontSize: 10, color: '#999', paddingRight: 8}}>{item.time}</Text>*/}
                 </View>
                 {
                     item.image ? 
@@ -89,20 +91,21 @@ class Home extends Component {
                     :null
                 }
                 </TouchableOpacity>
-                <View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', padding: 10, alignItems: 'center', height: 55}}>
                     <TouchableOpacity   onPress={()=>{ item.like = !item.like; this.setState({}) }} activeOpacity={0.8} style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon  name={ item.like ? 'ios-heart' : 'ios-heart-outline'} style={{color: item.like ? '#EE2737' : '#604c8d', marginLeft: 5, marginRight: 5}}/>
+                        <Icon  name={ item.like ? 'ios-heart' : 'ios-heart-outline'} style={{color: item.like ? '#EE2737' : '#604c8d', marginLeft: 7, marginRight: 7}}/>
                     </TouchableOpacity>
-
-                    <Icon  name="ios-text-outline" style={{color: '#604c8d', marginLeft: 5, marginRight: 5}}/>
-                    {
-                        item.comment && item.comment.length > 0 ?
-                        <Text style={{fontSize:12, color: '#555'}}>
-                            <Text style={{fontSize: 12, fontWeight: 'bold', color: '#444'}}>{item.comment[0].name} :</Text>
-                            {item.comment[0].text}
-                        </Text>
-                    :null
-                    }
+                    <Icon  name="ios-text-outline" style={{color: '#604c8d', marginLeft: 7, marginRight: 10}}/>
+                    <TouchableOpacity activeOpacity={0.8} onPress={()=>this.props.navigation.navigate('Detail', index)}>
+                        {
+                            item.comments && item.comments.length > 0 && this.state.commentId != item.id?
+                            <Text style={{fontSize:12, color: '#555'}}>
+                                <Text style={{fontSize: 12, fontWeight: 'bold', color: '#444'}} numberOfLines={1}>{item.comments[item.comments.length - 1].user} :</Text>
+                                {item.comments[item.comments.length - 1].text}
+                            </Text>
+                            : null
+                        }
+                    </TouchableOpacity>
                 </View>
             </View>
             )
@@ -168,7 +171,7 @@ class Home extends Component {
                     ListHeaderComponent ={()=>this.renderHeader()}
                     data={this.props.app.timeline}
                     keyExtractor={(item, index)=>index}
-                    renderItem={({item, index})=>this.renderItem(item)}
+                    renderItem={({item, index})=>this.renderItem(item, index)}
                     ListEmptyComponent={()=>this.noDataDisplay()}
                     >
                 </FlatList>

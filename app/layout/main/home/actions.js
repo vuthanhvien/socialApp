@@ -10,7 +10,9 @@ export const addTimeline = (data)=>({
     data: data
 })
 
-export const addComment = (data)=>({
+export const addComment = (data, id)=>({
 	type: 'FEED_ADD_COMMENT',
-	data: data
+	data: data,
+	id: id
 })
+
